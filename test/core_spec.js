@@ -98,46 +98,34 @@ describe('application logic', () => {
     describe('vote', () => {
         it('creates a tally for the voted entry', () => {
             const state = Map({
-                vote: Map({
-                    pair: List.of('Enema of the State', 'Dookie')
-                }),
-                entries: List()
+                pair: List.of('Enema of the State', 'Dookie')
             });
             const nextState = vote(state, 'Enema of the State');
 
             expect(nextState).to.equal(Map({
-                vote: Map({
-                    pair: List.of('Enema of the State', 'Dookie'),
-                    tally: Map({
-                        'Enema of the State': 1
-                    })
-                }),
-                entries: List()
+                pair: List.of('Enema of the State', 'Dookie'),
+                tally: Map({
+                    'Enema of the State': 1
+                })
             }));
         })
 
         it('adds to existing tally for the voted entry', () => {
             const state = Map({
-                vote: Map({
-                    pair: List.of('Enema of the State', 'Dookie'),
-                    tally: Map({
-                        'Enema of the State': 3,
-                        'Dookie': 2
-                    })
-                }),
-                entries: List()
+                pair: List.of('Enema of the State', 'Dookie'),
+                tally: Map({
+                    'Enema of the State': 3,
+                    'Dookie': 2
+                })
             });
             const nextState = vote(state, 'Enema of the State');
 
             expect(nextState).to.equal(Map({
-                vote: Map({
-                    pair: List.of('Enema of the State', 'Dookie'),
-                    tally: Map({
-                        'Enema of the State': 4,
-                        'Dookie': 2
-                    })
-                }),
-                entries: List()
+                pair: List.of('Enema of the State', 'Dookie'),
+                tally: Map({
+                    'Enema of the State': 4,
+                    'Dookie': 2
+                })
             }));
         });
     });
