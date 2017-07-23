@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+import {List, Map} from 'immutable';
 
 describe('immutability', () => {
     describe('a number', () => {
@@ -6,7 +7,7 @@ describe('immutability', () => {
             return currentState + 1;
         }
 
-        it('is immutabile', () => {
+        it('is immutable', () => {
             let state = 42;
             let nextState = increment(state);
 
@@ -14,4 +15,56 @@ describe('immutability', () => {
             expect(nextState).to.equal(43);
         });
     })
+
+    describe('a list', () => {
+        function addAlbum (currentState, album) {
+            return currentState.push(album);
+        }
+
+        it('is immutable', () => {
+            let state = List.of('Enema of the State', 'Dookie');
+            let nextState = addAlbum(state, 'Sticks and Stones');
+
+            expect(state).to.equal(List.of(
+                'Enema of the State',
+                'Dookie'
+            ));
+            expect(nextState).to.equal(List.of(
+                'Enema of the State',
+                'Dookie',
+                'Sticks and Stones'
+            ))
+        });
+    });
+
+    describe('a tree', () => {
+        function addAlbum (currentState, album) {
+            return currentState.update('albums', albums => albums.push(album));
+        }
+
+        it('is immutable', () => {
+            let state = Map({
+                albums: List.of('Enema of the State', 'Dookie')
+            });
+            let nextState = addAlbum(state, 'Smash');
+
+            expect(state).to.equal(Map(
+                {
+                    albums: List.of(
+                        'Enema of the State',
+                        'Dookie'
+                    )
+                }
+            ));
+            expect(nextState).to.equal(Map(
+                {
+                    albums: List.of(
+                        'Enema of the State',
+                        'Dookie',
+                        'Smash'
+                    )
+                }
+            ));
+        })
+    });
 });
