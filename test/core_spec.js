@@ -75,6 +75,24 @@ describe('application logic', () => {
                 entries: List.of('Under Soil and Dirt', 'Enema of the State', 'Dookie')
             }));
         });
+
+        it('marks winner when just one entry is left', () => {
+            const state = Map({
+                vote: Map({
+                    pair: List.of('Enema of the State', 'Dookie'),
+                    tally: Map({
+                        'Enema of the State': 4,
+                        'Dookie': 2
+                    })
+                }),
+                entries: List.of()
+            });
+            const nextState = next(state);
+
+            expect(nextState).to.equal(Map({
+                winner: 'Enema of the State'
+            }));
+        });
     })
 
     describe('vote', () => {
